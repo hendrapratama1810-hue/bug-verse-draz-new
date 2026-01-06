@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>DRAZ VERSE FEATURE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{
+    min-height:100vh;
+    background:#050505;
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* BACKGROUND GEOMETRIS */
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+        repeating-linear-gradient(45deg,rgba(0,255,150,.18) 0 20px,transparent 20px 40px),
+        repeating-linear-gradient(-45deg,rgba(0,180,255,.12) 0 20px,transparent 20px 40px);
+    filter:blur(18px);
+    animation:bgMove 25s linear infinite;
+}
+@keyframes bgMove{
+    from{background-position:0 0}
+    to{background-position:800px 800px}
+}
+
+/* BACK BUTTON */
+.back{
+    position:fixed;
+    top:14px;
+    left:14px;
+    padding:6px 12px;
+    background:#00ff88;
+    color:black;
+    border-radius:8px;
+    box-shadow:0 0 14px #00ff88;
+    cursor:pointer;
+}
+
+/* AVATAR (GIF BULAT 1:1) */
+.avatar{
+    width:120px;
+    height:120px;
+    margin:60px auto 12px;
+    border-radius:50%;
+    overflow:hidden;
+    background:#000;
+    box-shadow:0 0 14px #00ff88,0 0 32px rgba(0,255,136,.8);
+}
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* INPUT */
+input{
+    width:85%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:10px;
+    background:#111;
+    color:#00ff88;
+    box-shadow:0 0 10px rgba(0,255,136,.4);
+    outline:none;
+}
+
+/* BUTTON */
+button{
+    width:85%;
+    padding:13px;
+    margin-top:12px;
+    border:none;
+    border-radius:10px;
+    background:#00ff88;
+    color:black;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+    box-shadow:0 0 14px #00ff88,0 0 34px rgba(0,255,136,.8);
+}
+button:active{transform:scale(.96);}
+
+/* FEATURE LIST */
+.list{
+    display:none;
+    width:85%;
+    margin:10px auto;
+    background:#000;
+    border-radius:10px;
+    box-shadow:0 0 14px #00ff88;
+}
+.list div{
+    padding:10px;
+    border-bottom:1px solid #033;
+    cursor:pointer;
+}
+.list div:last-child{border:none;}
+
+/* FAKE PROGRESS */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:99;
+}
+.progress-box{
+    width:80%;
+    max-width:320px;
+    background:#000;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 0 24px #00ff88;
+}
+.progress-text{
+    margin-bottom:10px;
+    color:#00ff88;
+    font-weight:bold;
+}
+.bar{
+    width:100%;
+    height:14px;
+    background:#022;
+    border-radius:10px;
+    overflow:hidden;
+}
+.bar-fill{
+    width:0%;
+    height:100%;
+    background:#00ff88;
+    box-shadow:0 0 14px #00ff88;
+}
+.percent{
+    margin-top:8px;
+    font-size:13px;
+    color:#7fffd4;
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="back" onclick="location.href='page2.html'">Back</div>
+
+<!-- GANTI FILE GIF SENDIRI -->
+<div class="avatar">
+    <img src="feature.gif" alt="Feature GIF">
+</div>
+
+<h3>DRAZ VERSE<br>FEATURE</h3>
+
+<input id="target" placeholder="No Target / Link">
+
+<button id="pick" onclick="toggleList()">Pilihan Fitur</button>
+
+<div id="list" class="list">
+    <div onclick="setFeature('Bug Crash')">Bug Crash</div>
+    <div onclick="setFeature('Bug Delay')">Bug Delay</div>
+    <div onclick="setFeature('Bug Force Close')">Bug Force Close</div>
+    <div onclick="setFeature('Bug Phone Off')">Bug Phone Off</div>
+    <div onclick="setFeature('Bug Super')">Bug Super</div>
+    <div onclick="setFeature('Bug Reset😈')">Bug Reset😈</div>
+    <div onclick="setFeature('Tiktok Downloader')">Tiktok Downloader</div>
+    <div onclick="setFeature('Instagram Downloader')">Instagram Downloader</div>
+    <div onclick="setFeature('Pinterest Downloader')">Pinterest Downloader</div>
+</div>
+
+<button id="action" onclick="execute()">Send Bug</button>
+
+<!-- PROGRESS -->
+<div class="overlay" id="overlay">
+  <div class="progress-box">
+    <div class="progress-text" id="ptext">Preparing...</div>
+    <div class="bar"><div class="bar-fill" id="bar"></div></div>
+    <div class="percent" id="percent">0%</div>
+  </div>
+</div>
+
+<script>
+let selected = "";
+
+function toggleList(){
+    list.style.display = list.style.display==="block"?"none":"block";
+}
+
+function setFeature(name){
+    selected = name;
+    pick.innerText = name;
+    list.style.display = "none";
+    action.innerText = name.includes("Downloader") ? "Download" : "Send Bug";
+}
+
+/* FAKE PROGRESS + OPEN DOWNLOADER */
+function startProgress(url){
+    overlay.style.display="flex";
+    window.open(url,"_blank");
+
+    let p=0;
+    const steps=[
+        {t:"Connecting...",to:25},
+        {t:"Fetching...",to:55},
+        {t:"Processing...",to:80},
+        {t:"Finalizing...",to:100}
+    ];
+    let i=0;
+
+    function next(){
+        if(i>=steps.length) return;
+        ptext.innerText=steps[i].t;
+        let target=steps[i].to;
+        let int=setInterval(()=>{
+            p+=2;
+            bar.style.width=p+"%";
+            percent.innerText=p+"%";
+            if(p>=target){
+                clearInterval(int);
+                i++;
+                if(p>=100){
+                    setTimeout(()=>{
+                        overlay.style.display="none";
+                        bar.style.width="0%";
+                        percent.innerText="0%";
+                        p=0;
+                    },600);
+                }else next();
+            }
+        },120);
+    }
+    next();
+}
+
+/* MAIN EXECUTE */
+function execute(){
+    const value = target.value.trim();
+    if(value===""){ alert("Masukkan No Target / Link!"); return; }
+
+    /* DOWNLOADER MODE */
+    if(selected==="Tiktok Downloader"){
+        if(!value.includes("tiktok")){ alert("Masukkan link TikTok!"); return; }
+        navigator.clipboard.writeText(value);
+        startProgress("https://snaptik.app/");
+    }
+    else if(selected==="Instagram Downloader"){
+        if(!value.includes("instagram")){ alert("Masukkan link Instagram!"); return; }
+        navigator.clipboard.writeText(value);
+        startProgress("https://snapinsta.app/");
+    }
+    else if(selected==="Pinterest Downloader"){
+        if(!value.includes("pin")){ alert("Masukkan link Pinterest!"); return; }
+        navigator.clipboard.writeText(value);
+        startProgress("https://pinterestvideodownloader.com/");
+    }
+    /* BUG MODE */
+    else{
+        startProgress("about:blank");
+        setTimeout(()=>alert("Bug terkirim: "+selected),1200);
+    }
+}
+</script>
+
+</body>
+</html>
