@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>DRAZ MENU</title>
+<title>DRAZ VERSE 1.0</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{
     min-height:100vh;
     background:#050505;
     color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    text-align:center;
     overflow:hidden;
 }
+
+/* BACKGROUND GEOMETRIS */
 .bg{
     position:fixed;
     inset:0;
@@ -30,57 +29,99 @@ body{
     from{background-position:0 0}
     to{background-position:700px 700px}
 }
-.menu{
+
+/* HAMBURGER LOGOUT */
+.hamburger{
     position:fixed;
     top:14px;
     left:14px;
     font-size:26px;
-    color:#00ff88;
+    cursor:pointer;
+    z-index:10;
 }
-.dropdown{
+.logout-menu{
     display:none;
+    position:fixed;
+    top:50px;
+    left:14px;
     background:#000;
-    padding:10px;
-    margin-top:6px;
+    color:#00ff88;
+    padding:10px 20px;
     border-radius:10px;
-    box-shadow:0 0 12px #00ff88;
+    box-shadow:0 0 14px #00ff88;
+    cursor:pointer;
 }
-.container{
+
+/* VIDEO BANNER */
+.video-banner{
     width:90%;
-    max-width:320px;
-    text-align:center;
+    max-width:400px;
+    margin:40px auto 20px;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 0 20px #00ff88,0 0 50px rgba(0,255,136,.7);
 }
-.btn{
-    width:100%;
+
+/* HEADER */
+h1,h2{
+    text-shadow:0 0 14px #00ff88;
+}
+h1{
+    margin-top:20px;
+    font-size:24px;
+}
+h2{
+    margin:20px 0 40px;
+    font-size:20px;
+}
+
+/* BUTTON */
+button{
+    width:80%;
     padding:14px;
-    margin-top:15px;
-    background:#00ff88;
-    color:black;
+    margin:12px auto;
     border:none;
     border-radius:12px;
+    background:#00ff88;
+    color:black;
     font-weight:bold;
-    box-shadow:0 0 15px #00ff88;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 0 14px #00ff88,0 0 32px rgba(0,255,136,.7);
 }
+button:active{transform:scale(.96);}
 </style>
 </head>
 <body>
 
 <div class="bg"></div>
 
-<div class="menu" onclick="toggle()">☰
-    <div id="drop" class="dropdown">
-        <div onclick="location.href='index.html'">Logout</div>
-    </div>
+<!-- HAMBURGER LOGOUT -->
+<div class="hamburger" onclick="toggleLogout()">☰</div>
+<div class="logout-menu" id="logout" onclick="logout()">Logout</div>
+
+<!-- VIDEO BANNER -->
+<div class="video-banner">
+    <!-- GANTI video.mp4 DENGAN FILE SENDIRI -->
+    <video src="video.mp4" autoplay muted loop playsinline style="width:100%; height:auto; display:block;"></video>
 </div>
 
-<div class="container">
-    <button class="btn" onclick="location.href='profile.html'">My Profile</button>
-    <button class="btn" onclick="location.href='feature.html'">Feature</button>
-</div>
+<!-- HEADER -->
+<h1>DRAZ VERSE 1.0</h1>
+<h2>My Profile / Feature</h2>
+
+<!-- BUTTON -->
+<button onclick="location.href='profile.html'">My Profile</button>
+<button onclick="location.href='feature.html'">Feature</button>
 
 <script>
-function toggle(){
-    drop.style.display = drop.style.display==="block"?"none":"block";
+function toggleLogout(){
+    const menu = document.getElementById("logout");
+    menu.style.display = menu.style.display==="block"?"none":"block";
+}
+
+function logout(){
+    location.href='index.html';
 }
 </script>
 
